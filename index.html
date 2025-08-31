@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EveryWear - Online Clothing Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" href="images/logo.jpg" type="image/x-icon">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      background: linear-gradient(90deg, #ff6a00, #ee0979);
+      color: white;
+      padding: 15px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav h1 {
+      font-size: 24px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .hero {
+      width: 100%;
+      height: 100vh;
+      background: url('images/coverImage.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 1;
+      background: rgba(0,0,0,0.5);
+      padding: 20px 40px;
+      border-radius: 12px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: #ff6a00;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ee0979;
+    }
+
+    /* Sections */
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      color: #ee0979;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      margin: 10px 0;
+    }
+
+    .product p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff6a00;
+    }
+
+    .is {
+      color: rgb(28, 201, 28);
+      font-weight: bold;
+    }
+
+    .os{
+      color: rgb(243, 5, 5);
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(90deg, #ee0979, #ff6a00);
+      color: white;
+      padding: 40px 20px 20px;
+      margin-top: 50px;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-container h3 {
+      margin-bottom: 15px;
+      font-size: 18px;
+      border-bottom: 2px solid white;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .footer-container p, 
+    .footer-container a {
+      font-size: 14px;
+      color: #f1f1f1;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+    }
+
+    .footer-container a:hover {
+      text-decoration: underline;
+    }
+
+    .social-links a {
+      display: inline-block;
+      margin: 0 8px;
+      font-size: 18px;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #000;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      padding-top: 15px;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+    }
+    
+    .close-menu {
+      display: none;
+    }
+
+    @media (min-width: 769px) {
+      .menu-toggle,
+      .close-menu {
+        display: none !important;
+      }
+
+      nav ul {
+        display: flex !important; /* always show links */
+        position: static;
+        flex-direction: row;
+        background: none;
+        height: auto;
+        width: auto;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        background: rgba(238, 9, 121, 0.95);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        text-align: center;
+        transition: 0.3s ease;
+      }
+
+      nav ul li {
+        margin: 0;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+        cursor: pointer;
+        z-index: 1100;
+      }
+
+      .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 32px;
+        cursor: pointer;
+        color: white;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <h1>EveryWear</h1>
+    <div class="menu-toggle">&#9776;</div>
+    <ul>
+      <span class="close-menu">&times;</span>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#new">New Arrivals</a></li>
+      <li><a href="#men">Men</a></li>
+      <li><a href="#women">Women</a></li>
+      <li><a href="#kids">Kids</a></li>
+      <li><a href="#promotions">Promotions</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero" id="home"></div>
+
+  <!-- New Arrivals -->
+  <section id="new">
+    <h2>- New Arrivals -</h2>
+    <div class="products">
+      <div class="product">
+        <img src="images/newG.jpg" alt="New Shirt">
+        <h3>Sleeve Top</h3>
+        <p>Lightweight sleeve top, stylish design, perfect for casual daily wear.</p>
+        <p class="price">Rs 3,490.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/newB.jpg" alt="New Dress">
+        <h3>Collar Short Sleeve Shirt</h3>
+        <p>Smart short sleeve shirt with collar, ideal for casual outings.</p>
+        <p class="price">Rs 2,890.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/bgN.jpg" alt="New Shirt">
+        <h3>Toddler Baby Girl Dress </h3>
+        <p>Adorable baby girl dress, soft fabric, perfect for everyday comfort.</p>
+        <p class="price">Rs 1,400.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/bbN.jpg" alt="New Dress">
+        <h3>Boy Christmas Costume</h3>
+        <p>Festive Christmas costume for boys, fun and holiday-ready outfit.</p>
+        <p class="price">Rs 7,800.00</p>
+        <p class="os">• Out of Stock</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Men's Section -->
+  <section id="men">
+    <h2>- Men's Collection -</h2>
+    <div class="products">
+      <div class="product">
+        <img src="images/shirt.jpg" alt="Men T-Shirt">
+        <h3>Fabric Shirt</h3>
+        <p>Soft fabric shirt, breathable and stylish, perfect for casual wear.</p>
+        <p class="price">Rs 2,500.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/tshirt.jpg" alt="Men Jeans">
+        <h3>Polo T-shirt</h3>
+        <p>Classic polo t-shirt, comfortable fit, perfect for casual or semi-formal.</p>
+        <p class="price">Rs 2,490.00</p>
+        <p class="os">• Out of Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/hoodie.jpg" alt="Men T-Shirt">
+        <h3>Men’s Hoodie</h3>
+        <p>Cozy men’s hoodie, warm fabric, ideal for everyday casual comfort.</p>
+        <p class="price">Rs 3,300.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/cargoPant.jpg" alt="Men Jeans">
+        <h3>Cargo Pant</h3>
+        <p>Durable cargo pants, multiple pockets, great for casual outdoor wear.</p>
+        <p class="price">Rs 3,990.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Women's Section -->
+  <section id="women">
+    <h2>- Women's Collection -</h2>
+    <div class="products">
+      <div class="product">
+        <img src="images/partyWear.jpg" alt="Women Top">
+        <h3>Brown Sequin Dress</h3>
+        <p>Elegant brown sequin dress, sparkly style, perfect for evening parties.</p>
+        <p class="price">Rs 6,500.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/officeWear.jpg" alt="Women Skirt">
+        <h3>Bodycon Dress</h3>
+        <p>Chic bodycon dress, figure-hugging design, perfect for night outings.</p>
+        <p class="price">Rs 3,500.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/blazer.jpg" alt="Women Top">
+        <h3>Blazer Kit</h3>
+        <p>Stylish blazer kit, tailored design, ideal for formal smart looks.</p>
+        <p class="price">Rs 2,500.00</p>
+        <p class="os">• Out of Stock</p>
+      </div>
+      
+      <div class="product">
+        <img src="images/tshirtG.jpg" alt="Women Skirt">
+        <h3>Crop T-shirt</h3>
+        <p>Trendy crop t-shirt, modern style, perfect for casual summer outfits.</p>
+        <p class="price">Rs 800.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kids Section -->
+  <section id="kids">
+    <h2>- Kids Collection -</h2>
+    <div class="products">
+      <div class="product">
+        <img src="images/bg1.jpg"alt="Kids Wear">
+        <h3>Floral Baby Dress</h3>
+        <p>Sweet floral baby dress, soft fabric, perfect for special occasions.</p>
+        <p class="price">Rs 2,300.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/bg2.jpg" alt="Kids Dress">
+        <h3>Party Frock Casual</h3>
+        <p>Stylish party frock, casual design, perfect for outings and gatherings.</p>
+        <p class="price">Rs 4,250.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+
+      <div class="product">
+        <img src="images/bb1.jpg" alt="Kids Wear">
+        <h3>Boys' Suit</h3>
+        <p>Classic boys’ suit, formal design, ideal for weddings and birthdays.</p>
+        <p class="price">Rs 3,300.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+      
+      <div class="product">
+        <img src="images/bb2.jpg" alt="Kids Dress">
+        <h3>Gentle Man Outfit</h3>
+        <p>Elegant gentleman outfit, stylish design, perfect for classy special occasions.</p>
+        <p class="price">Rs 6,450.00</p>
+        <p class="is">• In Stock</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promotions -->
+  <section id="promotions">
+    <h2>- Promotions -</h2>
+    <div class="products">
+      <div class="product">
+        <img src="images/proG.jpg" alt="Promo">
+        <h3>Limited Time Deal</h3>
+        <p>Don’t Miss Out on Hot Offers!</p>
+        <p class="price">Starting Rs 1,500.00</p>
+      </div>
+
+      <div class="product">
+        <img src="images/proB.jpg" alt="Promo">
+        <h3>Weekend Offer</h3>
+        <p>Shop More, Save More This Weekend!</p>
+        <p class="price">Starting Rs 1,200.00</p>
+      </div>
+
+      <div class="product">
+        <img src="images/bgP.jpg" alt="Promo">
+        <h3>Summer Sale</h3>
+        <p>Up to 50% off on summer collection.</p>
+        <p class="price">Starting Rs 2,200.00</p>
+      </div>
+
+      <div class="product">
+        <img src="images/bbP.jpg" alt="Promo">
+        <h3>Buy 1 Get 1</h3>
+        <p>Exclusive offer on selected items.</p>
+        <p class="price">Starting Rs 1,800.00</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <h3>Address</h3>
+        <p>EveryWear Clothing</p>
+        <p>123 Fashion Street</p>
+        <p>Colombo, Sri Lanka</p>
+      </div>
+      <div>
+        <h3>FAQ</h3>
+        <a href="#">Shipping & Delivery</a>
+        <a href="#">Return Policy</a>
+        <a href="#">Payment Options</a>
+        <a href="#">Size Guide</a>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p>Email: support@everywear.com</p>
+        <p>Phone: +94 71 234 5678</p>
+        <p>WhatsApp: +94 77 987 6543</p>
+      </div>
+      <div>
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-square-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="copyright">© 2025 EveryWear Clothing. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    
+  </script>
+
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('nav ul');
+    const closeMenu = document.querySelector('.close-menu');
+
+    // Open menu
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.add('show');
+      menuToggle.style.display = 'none'; 
+      closeMenu.style.display = 'block'; 
+    });
+
+    // Close menu
+    closeMenu.addEventListener('click', () => {
+      navLinks.classList.remove('show');
+      menuToggle.style.display = 'block'; 
+      closeMenu.style.display = 'none';
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+        menuToggle.style.display = 'block';
+        closeMenu.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
